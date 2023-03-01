@@ -46,24 +46,29 @@ class Pokedex extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <Container>
+                <Container className="bg-danger">
+                    <p style={{ alignText: 'center' }}>Pokedex</p>
                     <Row>
-                        <Col xs={6}>
-                            {pokemons.map(pokemon => (
-                                <Card style={{ width: '13rem' }}>
-                                    <Card.Img variant="top" src={pokemon.image} />
-                                    <Card.Body>
-                                        <Card.Title>{pokemon.name}</Card.Title>
-                                        <Card.Text>
-                                            {pokemon.type}
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            ))}
+                        <Col xs={6} className="card-columns">
+                            <Row md={3}>
+                                {pokemons.map(pokemon => (
+                                    <Col key={pokemon.id}>
+                                        <Card border="danger" key={pokemon.id} style={{ width: '12rem' }}>
+                                            <Card.Img variant="top" src={pokemon.image} />
+                                            <Card.Body>
+                                                <Card.Title>{pokemon.name}</Card.Title>
+                                                <Card.Text>
+                                                    {pokemon.type}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                ))}
+                            </Row>
                         </Col>
                         <Col xs={6}>xs=6</Col>
-                    </Row>
-                </Container>
+                    </Row >
+                </Container >
             );
         }
     }
