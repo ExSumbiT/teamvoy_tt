@@ -2,7 +2,23 @@ export class PokemonService {
 
 
     getPokemons(limit=12) {
-        return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}`).then(res => res.json())
+        const promises = [];
+        for (let i = 1; i <= limit; i++) {
+            const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+            promises.push(fetch(url).then(res => res.json()));
+        }
+
+        const pokemons = Promise.all(promises).then(results => {
+            const pokemon = results.map(data => ({
+                name: data.name,
+                id: data.id,
+                image: data.sprites["front_default"],
+                type: data.types.map(type => type.type.name).join(", "),
+            }));
+            return pokemon
+        });
+        return pokemons;
+        // return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}`).then(res => res.json())
     }
 
     getPokemonsByType(type) {
