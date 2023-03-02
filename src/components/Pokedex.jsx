@@ -73,9 +73,9 @@ class Pokedex extends React.Component {
                             <Container fluid className='vertical-scrollable' style={{ overflowY: 'scroll', height: '90vh' }}>
                                 <Row>
                                     {pokemons.map(pokemon => (
-                                        <Col xs='4' key={pokemon.id}>
-                                            <Card onClick={() => this.showInfo(pokemon.id)} border="danger" key={pokemon.id} style={{ width: '12rem' }}>
-                                                <Card.Img variant="top" src={pokemon.image} />
+                                        <Col xs={12} md={4} sm={12} key={pokemon.id}>
+                                            <Card onClick={() => this.showInfo(pokemon.id)} border="danger" key={pokemon.id}>
+                                                <Card.Img className="card-img-top" variant="top" src={pokemon.image} />
                                                 <Card.Body>
                                                     <Card.Title className="Title">{pokemon.name}</Card.Title>
                                                     <Card.Text className="Title">
@@ -88,8 +88,8 @@ class Pokedex extends React.Component {
                                 </Row>
                             </Container>
                         </Col>
-                        <Col xs={6}>{this.state.show ? <Card style={{ width: '18rem', marginTop: 50, marginBottom: 50 }}>
-                            < Card.Img variant="top" src={this.state.show_pokemon?.image} />
+                        <Col xs={6}>{this.state.show ? <Card xs={2} style={{ marginTop: 50, marginBottom: 50 }}>
+                            < Card.Img className="card-img-top" variant="top" src={this.state.show_pokemon?.image} />
                             <Card.Body>
                                 <Card.Title className="Title">{this.state.show_pokemon?.name} #{this.state.show_pokemon?.id}</Card.Title>
                                 <Table bordered>
