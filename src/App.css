@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.fixType {
+  max-width: max-content;
+}
+
+.fixValue {
+  width: max-content;
+}
+
+.Title {
+  text-transform: capitalize;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
