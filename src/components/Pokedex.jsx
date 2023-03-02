@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import Table from 'react-bootstrap/Table';
 import { PokemonService } from "../service/pokemon";
 
 class Pokedex extends React.Component {
@@ -72,7 +73,7 @@ class Pokedex extends React.Component {
                             <Container fluid className='vertical-scrollable' style={{ overflowY: 'scroll', height: '90vh' }}>
                                 <Row>
                                     {pokemons.map(pokemon => (
-                                        <Col xs='auto' key={pokemon.id}>
+                                        <Col xs='4' key={pokemon.id}>
                                             <Card onClick={() => this.showInfo(pokemon.id)} border="danger" key={pokemon.id} style={{ width: '12rem' }}>
                                                 <Card.Img variant="top" src={pokemon.image} />
                                                 <Card.Body>
@@ -87,7 +88,54 @@ class Pokedex extends React.Component {
                                 </Row>
                             </Container>
                         </Col>
-                        <Col xs={6}>{this.state.show ? <p>{this.state.show_id}</p> : null}</Col>
+                        <Col xs={6}>{this.state.show ?
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src={this.state.show_pokemon?.image} />
+                                <Card.Body>
+                                    <Card.Title>{this.state.show_pokemon?.name} #{this.state.show_pokemon?.id}</Card.Title>
+                                    <Table bordered>
+                                        <tbody>
+                                            <tr>
+                                                <td>Type</td>
+                                                <td>{this.state.show_pokemon?.type}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Attack</td>
+                                                <td>{this.state.show_pokemon?.attack}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Defense</td>
+                                                <td>{this.state.show_pokemon?.defense}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>HP</td>
+                                                <td>{this.state.show_pokemon?.hp}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>SP Attack</td>
+                                                <td>{this.state.show_pokemon?.["special-attack"]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>SP Defense</td>
+                                                <td>{this.state.show_pokemon?.['special-defense']}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Speed</td>
+                                                <td>{this.state.show_pokemon?.speed}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Weight</td>
+                                                <td>{this.state.show_pokemon?.weight}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total moves</td>
+                                                <td>{this.state.show_pokemon?.moves}</td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </Card.Body>
+                            </Card>
+                            : null}</Col>
                     </Row >
                 </Container >
             );

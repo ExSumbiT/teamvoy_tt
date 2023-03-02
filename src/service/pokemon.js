@@ -18,7 +18,6 @@ export class PokemonService {
             return pokemon
         });
         return pokemons;
-        // return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}`).then(res => res.json())
     }
 
     getPokemonsByType(type) {
@@ -28,12 +27,25 @@ export class PokemonService {
     getPokemonById(id) {
         const promises = [fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())];
         const pokemonStat = Promise.all(promises).then(result => {
-            const stat = result.map(data => ({
-                type: data.types.map(type => type.type.name).join(", "),
-            }));
+            const stat = result.map((data) => {
+                let info = {
+                    name: data.name,
+                    id: this.lpad(data.id, 3),
+                    image: data.sprites["front_default"],
+                    type: data.types.map(type => type.type.name).join(", "),
+                    weight: data.weight,
+                    moves: data.moves.length}
+                data.stats.map(s => (info[s.stat.name] = s.base_stat))
+                return info
+            });
             return stat
         })
         return pokemonStat
+    }
+
+    lpad(value, padding) {
+        var zeroes = new Array(padding+1).join("0");
+        return (zeroes + value).slice(-padding);
     }
 
 
