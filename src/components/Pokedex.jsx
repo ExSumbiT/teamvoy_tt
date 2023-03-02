@@ -11,16 +11,20 @@ class Pokedex extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
+            show: false,
+            show_id: null,
+            show_pokemon: null,
             pokemons: []
         };
         this.pokemonService = new PokemonService()
+
+        this.showInfo = this.showInfo.bind(this)
     }
 
     componentDidMount() {
         this.pokemonService.getPokemons()
             .then(
                 (result) => {
-                    console.log(result)
                     this.setState({
                         isLoaded: true,
                         pokemons: result
@@ -38,6 +42,19 @@ class Pokedex extends React.Component {
             )
     }
 
+    showInfo(id) {
+        if (this.state.show_id == id) {
+            this.setState({ show: !this.state.show })
+        }
+        else {
+            this.pokemonService.getPokemonById(id).then((result) => {
+                console.log(result[0])
+                this.setState({ show_pokemon: result[0] })
+            })
+            this.setState({ show_id: id, show: true })
+        }
+    }
+
     render() {
         const { error, isLoaded, pokemons } = this.state;
         if (error) {
@@ -46,27 +63,31 @@ class Pokedex extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <Container className="bg-danger">
-                    <p style={{ alignText: 'center' }}>Pokedex</p>
+                <Container fluid className="bg-danger">
+                    <Container style={{ height: "10vh" }}>
+                        <p style={{ alignText: 'center' }}>Pokedex</p>
+                    </Container>
                     <Row>
-                        <Col xs={6} className="card-columns">
-                            <Row md={3}>
-                                {pokemons.map(pokemon => (
-                                    <Col key={pokemon.id}>
-                                        <Card border="danger" key={pokemon.id} style={{ width: '12rem' }}>
-                                            <Card.Img variant="top" src={pokemon.image} />
-                                            <Card.Body>
-                                                <Card.Title>{pokemon.name}</Card.Title>
-                                                <Card.Text>
-                                                    {pokemon.type}
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                ))}
-                            </Row>
+                        <Col xs={6}>
+                            <Container fluid className='vertical-scrollable' style={{ overflowY: 'scroll', height: '90vh' }}>
+                                <Row>
+                                    {pokemons.map(pokemon => (
+                                        <Col xs='auto' key={pokemon.id}>
+                                            <Card onClick={() => this.showInfo(pokemon.id)} border="danger" key={pokemon.id} style={{ width: '12rem' }}>
+                                                <Card.Img variant="top" src={pokemon.image} />
+                                                <Card.Body>
+                                                    <Card.Title>{pokemon.name}</Card.Title>
+                                                    <Card.Text>
+                                                        {pokemon.type}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </Container>
                         </Col>
-                        <Col xs={6}>xs=6</Col>
+                        <Col xs={6}>{this.state.show ? <p>{this.state.show_id}</p> : null}</Col>
                     </Row >
                 </Container >
             );

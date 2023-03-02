@@ -26,7 +26,14 @@ export class PokemonService {
     }
 
     getPokemonById(id) {
-        return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
+        const promises = [fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())];
+        const pokemonStat = Promise.all(promises).then(result => {
+            const stat = result.map(data => ({
+                type: data.types.map(type => type.type.name).join(", "),
+            }));
+            return stat
+        })
+        return pokemonStat
     }
 
 
