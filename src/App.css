@@ -42,98 +42,98 @@
 
 .bg-normal {
   background-color: #A8A77A;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-fire {
   background-color: #EE8130;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-water {
   background-color: #6390F0;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-electric {
   background-color: #F7D02C;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-grass {
   background-color: #7AC74C;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-ice {
   background-color: #96D9D6;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-fighting {
   background-color: #C22E28;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-poison {
   background-color: #A33EA1;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-ground {
   background-color: #E2BF65;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-flying {
   background-color: #A98FF3;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-psychic {
   background-color: #F95587;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-bug {
   background-color: #A6B91A;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-rock {
   background-color: #B6A136;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-ghost,
 .bg-shadow {
   background-color: #735797;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-dragon {
   background-color: #6F35FC;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-dark {
   background-color: #705746;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-steel {
   background-color: #B7B7CE;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-fairy {
   background-color: #D685AD;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .bg-unknown {
   background-color: #aaa;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 .App-logo {

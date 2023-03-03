@@ -36,6 +36,8 @@ class Pokedex extends React.Component {
             limit: 12,
             error: null,
             isLoaded: false,
+            isFilter: false,
+            filter: null,
             show: false,
             show_id: null,
             show_pokemon: null,
@@ -47,13 +49,13 @@ class Pokedex extends React.Component {
 
         this.showInfo = this.showInfo.bind(this)
         this.loadMore = this.loadMore.bind(this)
+        this.loadByType = this.loadByType.bind(this)
     }
     pokeRef = React.createRef();
 
     componentDidMount() {
         this.pokemonService.getPokemonTypes().then(result => {
             this.setState({ types: result })
-            console.log(result)
         })
         this.pokemonService.getPokemons(this.state.limit)
             .then(
@@ -63,9 +65,6 @@ class Pokedex extends React.Component {
                         pokemons: result
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -76,23 +75,81 @@ class Pokedex extends React.Component {
     }
 
     loadMore() {
-        this.setState({ isLoaded: true });
-        this.pokemonService.getPokemons(this.state.limit + 12)
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        pokemons: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+        if (this.state.isFilter) {
+            this.pokemonService.getPokemonsByType(this.state.limit + 12, this.state.filter)
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                            pokemons: result
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
+        }
+        else {
+            this.pokemonService.getPokemons(this.state.limit + 12)
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                            pokemons: result
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
+        }
         this.setState({ limit: this.state.limit + 12 })
+    }
+
+    loadByType(event) {
+        const type = event.target.value
+        if (type == 'All') {
+            this.setState({ isLoaded: true, isFilter: false, filter: null, limit: 12 });
+            this.pokemonService.getPokemons(12)
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                            pokemons: result
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
+        }
+        else {
+            this.setState({ isLoaded: true, isFilter: true, filter: type, limit: 12 });
+            this.pokemonService.getPokemonsByType(12, type)
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                            pokemons: result
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
+        }
     }
 
     showInfo(id) {
@@ -122,13 +179,11 @@ class Pokedex extends React.Component {
                     </Container>
                     <Row>
                         <Col xs={6}>
-                            <Form.Select style={{ height: '5vh', width: '100%' }} aria-label="Select pokemon type">
+                            <Form.Select onChange={this.loadByType} style={{ height: '5vh', width: '100%' }} aria-label="Select pokemon type">
                                 <option key='all' value={null}>All</option>
                                 {types.map(type => (
                                     <option key={type.name} value={type.name} className={`Title bg-${type.name}`}>
-                                        {/* <Badge as='p' key={type} bg='' className={`me-1 bg-${type.name}`}> */}
                                         {type.name}
-                                        {/* </Badge> */}
                                     </option>))}
                             </Form.Select>
                             <Container fluid className='vertical-scrollable' style={{ overflowY: 'scroll', height: '80vh' }}>

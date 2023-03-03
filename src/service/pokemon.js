@@ -1,12 +1,18 @@
 export class PokemonService {
 
 
-    getPokemons(limit=12) {
+    getPokemons(limit=12, items=[]) {
         const promises = [];
-        for (let i = 1; i <= limit; i++) {
-            const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-            promises.push(fetch(url).then(res => res.json()));
+        if(items.length > 0) {
+            for (let i = 0; i < limit; i++){
+                promises.push(fetch(items[i][0]).then(res => res.json()))
+            }
         }
+        else {
+            for (let i = 1; i <= limit; i++) {
+                const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+                promises.push(fetch(url).then(res => res.json()));
+            }}
 
         const pokemons = Promise.all(promises).then(results => {
             const pokemon = results.map(data => ({
@@ -20,8 +26,13 @@ export class PokemonService {
         return pokemons;
     }
 
-    getPokemonsByType(type) {
-        return fetch(`https://pokeapi.co/api/v2/type/${type}/`).then(res => res.json().pokemon)
+    getPokemonsByType(limit, type) {
+        const promises = [fetch(`https://pokeapi.co/api/v2/type/${type}/`).then(res => res.json())];
+        const typePokemon = Promise.all(promises).then(result => {
+            const urls = result[0].pokemon.map(data => ([data.pokemon.url]));
+            return this.getPokemons(limit, urls)
+        })
+        return typePokemon
     }
 
     getPokemonTypes() {
