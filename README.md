@@ -2,11 +2,10 @@
 
 ### Pokedex, developed with React, Bootstrap5 (React Bootstrap) and [pokeapi](https://pokeapi.co/).
 
-## Available Scripts
+To start project you must run in the project directory:
 
-In the project directory, you can run:
-
-### `npm install` & `npm start`\or `docker-compose up`
+### `npm install` & `npm start`
+### or `docker-compose up`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
