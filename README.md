@@ -1,4 +1,6 @@
-Developed with React and Bootstrap5
+# Test task for Teamvoy company.
+
+### Pokedex, developed with React, Bootstrap5 and [pokeapi](https://pokeapi.co/).
 
 ## Available Scripts
 
