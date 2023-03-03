@@ -1,12 +1,12 @@
 # Test task for Teamvoy company.
 
-### Pokedex, developed with React, Bootstrap5 and [pokeapi](https://pokeapi.co/).
+### Pokedex, developed with React, Bootstrap5 (React Bootstrap) and [pokeapi](https://pokeapi.co/).
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm install` & `npm start` or `docker-compose up`
+### `npm install` & `npm start`\or `docker-compose up`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
