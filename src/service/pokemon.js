@@ -12,7 +12,7 @@ export class PokemonService {
             const pokemon = results.map(data => ({
                 name: data.name,
                 id: data.id,
-                image: data.sprites["front_default"],
+                image: data.sprites.other["official-artwork"]["front_default"],
                 type: data.types.map(type => type.type.name).join(", "),
             }));
             return pokemon
@@ -31,7 +31,7 @@ export class PokemonService {
                 let info = {
                     name: data.name,
                     id: this.lpad(data.id, 3),
-                    image: data.sprites["front_default"],
+                    image: data.sprites.other["official-artwork"]["front_default"],
                     type: data.types.map(type => type.type.name).join(", "),
                     weight: data.weight,
                     moves: data.moves.length}
