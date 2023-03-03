@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import { PokemonService } from "../service/pokemon";
 
 const colors = {
@@ -39,6 +40,7 @@ class Pokedex extends React.Component {
             show_id: null,
             show_pokemon: null,
             el: null,
+            types: [],
             pokemons: []
         };
         this.pokemonService = new PokemonService()
@@ -49,6 +51,10 @@ class Pokedex extends React.Component {
     pokeRef = React.createRef();
 
     componentDidMount() {
+        this.pokemonService.getPokemonTypes().then(result => {
+            this.setState({ types: result })
+            console.log(result)
+        })
         this.pokemonService.getPokemons(this.state.limit)
             .then(
                 (result) => {
@@ -103,7 +109,7 @@ class Pokedex extends React.Component {
     }
 
     render() {
-        const { error, isLoaded, pokemons } = this.state;
+        const { error, isLoaded, pokemons, types } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -111,12 +117,21 @@ class Pokedex extends React.Component {
         } else {
             return (
                 <Container fluid>
-                    <Container style={{ height: "10vh", margin: '10px auto' }}>
+                    <Container style={{ height: "7vh", margin: '10px auto' }}>
                         <h1 className="logo">Pokedex</h1>
                     </Container>
                     <Row>
                         <Col xs={6}>
-                            <Container fluid className='vertical-scrollable' style={{ overflowY: 'scroll', height: '85vh' }}>
+                            <Form.Select style={{ height: '5vh', width: '100%' }} aria-label="Select pokemon type">
+                                <option key='all' value={null}>All</option>
+                                {types.map(type => (
+                                    <option key={type.name} value={type.name} className={`Title bg-${type.name}`}>
+                                        {/* <Badge as='p' key={type} bg='' className={`me-1 bg-${type.name}`}> */}
+                                        {type.name}
+                                        {/* </Badge> */}
+                                    </option>))}
+                            </Form.Select>
+                            <Container fluid className='vertical-scrollable' style={{ overflowY: 'scroll', height: '80vh' }}>
                                 <Row>
                                     {pokemons.map(pokemon => (
                                         <Col xs={12} md={4} sm={12} key={pokemon.id}>
