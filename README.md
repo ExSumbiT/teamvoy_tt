@@ -8,7 +8,7 @@
 ### `npm install` & `npm start`
 ### or `docker-compose up`
 
-Runs the app in the development mode.\
+The app runs in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 Bonus points for implementing:\
